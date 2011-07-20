@@ -5,8 +5,7 @@ class String
   end
   
   def lib_with replacements
-    replacements = replacements.reverse
-    self.gsub( /\(\(([^)]+)\)\)/ ).each{ replacements.pop }
+    self.gsub( /\(\(([^)]+)\)\)/ ).each{ replacements.shift }
   end
   
   def madlib_it( output = $stdout, input = $stdin )
