@@ -7,11 +7,10 @@ class MockSource
   end
 
   def puts input
-    @looking_for = input
   end
   
   def gets
-    @results[ @looking_for ]
+    @results.pop
   end
   
 end
@@ -19,7 +18,7 @@ end
 describe "MadLib" do
 
   def replacements
-    { "((a gemstone))" => "Ruby", "((a letter))" => "K" }
+    [ "Ruby", "K" ].reverse
   end
 
   it "should find the madlib tokens" do
@@ -35,11 +34,18 @@ describe "MadLib" do
     "Our favourite language is ((a gemstone)), much better than ((a letter))".lib_with( replacements ).should ==
       "Our favourite language is Ruby, much better than K"
   end
-  
+    
   it "should prompt for found tokens and return the results" do
     source = MockSource.new( replacements )
     "Our favourite language is ((a gemstone))".madlib_it( source, source ).should == 
       "Our favourite language is Ruby"
   end
+  
+  it "should handle multiple keys with same value" do
+    source = MockSource.new( [ "sleepily", "mildly" ] )
+    "I listened ((an adverb)), so ((an adverb))".madlib_it( source, source ).should == 
+      "I listened sleepily, so mildly"
+  end
+
 
 end

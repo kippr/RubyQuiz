@@ -5,15 +5,15 @@ class String
   end
   
   def lib_with replacements
-    self.gsub( /\(\(([^)]+)\)\)/ , replacements )
+    self.gsub( /\(\(([^)]+)\)\)/ ).each{ replacements.pop }
   end
   
   def madlib_it( output = $stdout, input = $stdin )
-    mappings = {}
+    mappings = []
     self.libs.each do | lib |
       output.puts "Please provide: "
       output.puts lib
-      mappings[ lib ] = input.gets
+      mappings.push input.gets
     end
     self.lib_with mappings
   end
