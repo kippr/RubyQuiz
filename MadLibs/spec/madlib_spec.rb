@@ -1,11 +1,10 @@
 class String
 
   def libs
-    self.scan(/\(\(([^)]+)\)\)/).flatten  
+    self.scan(/(\(\([^)]+\)\))/).flatten
   end
   
   def lib_with replacements
-    "Our favourite language is Ruby"
     self.sub( /\(\(([^)]+)\)\)/ , replacements )
   end
   
@@ -14,7 +13,7 @@ end
 describe "MadLib" do
 
   it "should find the madlib tokens" do
-    "Our favourite language is ((a gemstone))".libs.should include("a gemstone")
+    "Our favourite language is ((a gemstone))".libs.should include("((a gemstone))")
   end
   
   it "should replace madlib tokens with provided values" do
