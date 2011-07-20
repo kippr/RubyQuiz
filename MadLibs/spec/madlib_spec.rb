@@ -18,7 +18,7 @@ end
 describe "MadLib" do
 
   def replacements
-    [ "Ruby", "K" ].reverse
+    [ "Ruby", "K" ]
   end
 
   it "should find the madlib tokens" do
@@ -36,13 +36,13 @@ describe "MadLib" do
   end
     
   it "should prompt for found tokens and return the results" do
-    source = MockSource.new( replacements )
+    source = MockSource.new( replacements.reverse )
     "Our favourite language is ((a gemstone))".madlib_it( source, source ).should == 
       "Our favourite language is Ruby"
   end
   
   it "should handle multiple keys with same value" do
-    source = MockSource.new( [ "sleepily", "mildly" ] )
+    source = MockSource.new( [ "sleepily", "mildly" ].reverse )
     "I listened ((an adverb)), so ((an adverb))".madlib_it( source, source ).should == 
       "I listened sleepily, so mildly"
   end

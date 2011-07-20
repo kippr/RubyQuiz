@@ -5,6 +5,7 @@ class String
   end
   
   def lib_with replacements
+    replacements = replacements.reverse
     self.gsub( /\(\(([^)]+)\)\)/ ).each{ replacements.pop }
   end
   
@@ -13,7 +14,7 @@ class String
     self.libs.each do | lib |
       output.puts "Please provide: "
       output.puts lib
-      mappings.push input.gets
+      mappings.push input.gets.chomp
     end
     self.lib_with mappings
   end
