@@ -9,7 +9,7 @@ class LcdWriter
   end
   
   def line_a numbers
-    numbers.chars.collect do | num |
+    numbers.to_s.chars.collect do | num |
       c = LcdCode.new( num.to_i )
       " " + ( c.pos( 0 ) * @size ) + " "
     end.join( " " )
