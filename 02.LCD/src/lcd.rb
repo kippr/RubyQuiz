@@ -13,8 +13,7 @@ class LcdWriter
   end
   
   def line_b numbers
-    c = LcdCode.new( numbers )
-    c.pos( 1 ) + ( ' ' * @size ) + c.pos( 2 )
+    for_all( numbers ) { | n | n.pos( 1 ) + ( ' ' * @size ) + n.pos( 2 ) }
   end
 
   def line_c numbers
@@ -22,25 +21,26 @@ class LcdWriter
   end
   
   def line_d numbers
-    numbers.to_s.chars.collect do | num |
-      c = LcdCode.new( num.to_i )
-      c.pos( 4 ) + ( ' ' * @size ) + c.pos( 5 )
-    end.join( " " )
+    for_all( numbers ) { | n | n.pos( 4 ) + ( ' ' * @size ) + n.pos( 5 ) }
   end
   
   def line_e numbers
     horizontal_for numbers, 6
   end
   
-  def code_for number
-    LcdCode.new( number )
-  end
 
   def horizontal_for numbers, pos_code
+    for_all( numbers ) { | n | " " + ( n.pos( pos_code ) * @size ) + " " }
+  end
+  
+  def for_all numbers, &block
     numbers.to_s.chars.collect do | num |
-      c = LcdCode.new( num.to_i )
-      " " + ( c.pos( pos_code ) * @size ) + " "
+      yield code_for( num )
     end.join( " " )
+  end
+
+  def code_for number
+    LcdCode.new( number.to_i )
   end
   
 end
