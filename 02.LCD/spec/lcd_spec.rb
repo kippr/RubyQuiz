@@ -23,7 +23,6 @@ describe LcdWriter do
   end
   
   it 'should be able to write top line out respecting size' do
-    pending
     LcdWriter.new( 1 ).line_1( 1 ).should == "   "
     LcdWriter.new( 2 ).line_1( 1 ).should == "    "
     LcdWriter.new( 3 ).line_1( 1 ).should == "     "
