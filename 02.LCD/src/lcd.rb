@@ -5,10 +5,10 @@ class LcdWriter
   end
 
   def out numbers
-    line_1 numbers
+    line_a numbers
   end
   
-  def line_1 numbers
+  def line_a numbers
     c = LcdCode.new( numbers )
     " " + ( c.pos( 0 ) * @size ) + " "
   end
@@ -33,21 +33,25 @@ class LcdCode
   end
   
   def pos code
-    set? code ? '-' : ' '
+    set?( code ) ? '-' : ' '
   end
   
   def set? code
-    as_bitset( @number ) && as_bitset( code ) != 0
+    #puts "num: #{@number} = #{as_bitset( @number )}"
+    #puts "cod: #{code}    = #{2**code}"
+    as_bitset( @number ) & 2**code != 0
   end
 
-  def as_matrix_code number
+  def as_bitset number
     case number
     when 0 
       has_set 0, 1, 2, 4, 5, 6
     when 1
       has_set 2, 5
+    when 8
+      has_set 0, 1, 2, 3, 4, 5, 6
     else
-      raise "Can only accept 0-9"
+      raise "Can only accept 0-9 but got #{number}"
     end
   end
 
@@ -56,7 +60,7 @@ class LcdCode
   end
   
   def to_i
-    as_matrix_code @number
+    as_bitset @number
   end
 
 end
