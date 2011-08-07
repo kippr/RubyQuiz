@@ -34,9 +34,9 @@ class LcdWriter
     horizontal_for numbers, 6
   end
   
-  def vertical_for numbers, pos_a, pos_b
+  def vertical_for numbers, left_line, right_line
     for_all( numbers ) do | n | 
-      n.draw( pos_a ) + ( ' ' * @size ) + n.draw( pos_b )
+      n.draw( left_line ) + ( ' ' * @size ) + n.draw( right_line )
      end
   end
 
