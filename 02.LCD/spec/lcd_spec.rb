@@ -40,6 +40,10 @@ describe LcdWriter do
   it 'should be able to write middle horizontal line with multiple numbers' do
     lcd.line_c( 235 ).should == ' --   --   -- '
   end
+  
+  it 'should be able to write bottom horizontal line with multiple numbers' do
+    lcd.line_e( 679 ).should == ' --           '
+  end
 
   it 'should be able to write top vertical line which is not blank, respecting size' do
     LcdWriter.new( 1 ).line_b( 4 ).should == "| |"
