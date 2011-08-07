@@ -36,13 +36,17 @@ class LcdWriter
   
   def vertical_for numbers, left_line, right_line
     for_all( numbers ) do | n | 
-      n.draw( left_line ) + ( ' ' * @size ) + n.draw( right_line )
+      n.draw( left_line ) + inner_space + n.draw( right_line )
      end
   end
+  
+  def inner_space
+    ' ' * @size
+  end
 
-  def horizontal_for numbers, pos_code
+  def horizontal_for numbers, horizonal_line
     for_all( numbers ) do | n | 
-      " " + ( n.draw( pos_code ) * @size ) + " "
+      " " + ( n.draw( horizonal_line ) * @size ) + " "
     end
   end
   
