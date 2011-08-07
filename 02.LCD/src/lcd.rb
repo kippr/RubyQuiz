@@ -12,7 +12,7 @@ class LcdWriter
     horizontal_for numbers, 0
   end
   
-  def line_d numbers
+  def line_b numbers
     vertical_for numbers, 1, 2
   end
 
