@@ -34,8 +34,8 @@ describe LcdWriter do
   end
 
   it 'should be able to write top vertical line which is not blank, respecting size' do
-    LcdWriter.new( 1 ).line_b( 8 ).should == "| |"
-    LcdWriter.new( 2 ).line_b( 8 ).should == "|  |"
+    LcdWriter.new( 1 ).line_b( 4 ).should == "| |"
+    LcdWriter.new( 2 ).line_b( 4 ).should == "|  |"
   end
   
 end

@@ -25,12 +25,14 @@ class LcdWriter
  
 end
 
-  # Defines positions that are 'set' for each number, using 2**x where x corresponds to below
+  # Defines positions that are 'set' for each number, using 2**x where x corresponds to below:
   #  -    0
   # | |  1 2
   #  -    3
   # | |  4 5
   #  -    6
+  #
+  # Also, can return appropriate char ('|', '_', or ' ') for each code.
 class LcdCode
 
   def initialize number
@@ -38,7 +40,15 @@ class LcdCode
   end
   
   def pos code
-    set?( code ) ? [0,3,6].include?(code) ? '-' : '|' : ' '
+    set?( code ) ? filled_in( code ) : blank
+  end
+  
+  def filled_in( code )
+    [ 0, 3, 6 ].include?( code ) ? '-' : '|'
+  end
+  
+  def blank
+    ' '
   end
   
   def set? code
@@ -53,6 +63,8 @@ class LcdCode
       has_set 0, 1, 2, 4, 5, 6
     when 1
       has_set 2, 5
+    when 4
+      has_set 1, 2, 3, 5
     when 8
       has_set 0, 1, 2, 3, 4, 5, 6
     else
