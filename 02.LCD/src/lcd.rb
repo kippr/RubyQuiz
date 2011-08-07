@@ -21,6 +21,13 @@ class LcdWriter
     horizontal_for numbers, 3
   end
   
+  def line_d numbers
+    numbers.to_s.chars.collect do | num |
+      c = LcdCode.new( num.to_i )
+      c.pos( 4 ) + ( ' ' * @size ) + c.pos( 5 )
+    end.join( " " )
+  end
+  
   def line_e numbers
     horizontal_for numbers, 6
   end
@@ -36,7 +43,6 @@ class LcdWriter
     end.join( " " )
   end
   
- 
 end
 
   # Defines positions that are 'set' for each number, using 2**x where x corresponds to below:
