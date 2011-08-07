@@ -17,7 +17,7 @@ class LcdWriter
     c = LcdCode.new( numbers )
     c.pos( 1 ) + ( ' ' * @size ) + c.pos( 2 )
   end
-  
+
   def code_for number
     LcdCode.new( number )
   end
