@@ -108,7 +108,7 @@ class LcdCode
     when 8
       has_set 0, 1, 2, 3, 4, 5, 6
     when 9
-      has_set 0, 1, 2, 3, 5
+      has_set 0, 1, 2, 3, 5, 6
     else
       raise "Can only accept 0-9 but got #{number}"
     end

@@ -41,7 +41,7 @@ describe LcdWriter do
   end
   
   it 'should be able to write bottom horizontal line with multiple numbers' do
-    lcd.line_e( 679 ).should == ' --           '
+    lcd.line_e( 679 ).should == ' --        -- '
   end
 
   it 'should be able to write upper vertical line which is not blank, respecting size' do
@@ -53,4 +53,15 @@ describe LcdWriter do
     lcd.line_d( 25 ).should == "|       |"
   end
   
+  it 'should output example 1 from the book' do
+    puts
+    puts lcd.out( "012345" )
+    puts
+  end
+  
+  it 'should output example 2 from the book' do
+    puts
+    puts LcdWriter.new( 1 ).out( 6789 )
+    puts
+  end
 end
