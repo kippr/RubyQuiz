@@ -5,15 +5,14 @@ describe LcdWriter do
   let( :lcd ) { LcdWriter.new } 
 
   it 'should output numbers at size 2 by default' do
-    pending
     expected = <<-eos
-          --   -- 
-       |    |    |
-       |    |    |
-          --   -- 
-       | |       |
-       | |       |
-          --   -- 
+      --   -- 
+   |    |    |
+   |    |    |
+      --   -- 
+   | |       |
+   | |       |
+      --   -- 
     eos
     lcd.out( "123" ).should == expected
   end
