@@ -13,6 +13,11 @@ class LcdWriter
     " " + ( c.pos( 0 ) * @size ) + " "
   end
   
+  def line_b numbers
+    c = LcdCode.new( numbers )
+    c.pos( 1 ) + ( ' ' * @size ) + c.pos( 2 )
+  end
+  
   def code_for number
     LcdCode.new( number )
   end
@@ -33,7 +38,7 @@ class LcdCode
   end
   
   def pos code
-    set?( code ) ? '-' : ' '
+    set?( code ) ? [0,3,6].include?(code) ? '-' : '|' : ' '
   end
   
   def set? code

@@ -22,15 +22,20 @@ describe LcdWriter do
     lcd.code_for( 1 ).to_i.should == 2**2 + 2**5
   end
   
-  it 'should be able to write top line out respecting size' do
+  it 'should be able to write top horizontal line out respecting size' do
     LcdWriter.new( 1 ).line_a( 1 ).should == "   "
     LcdWriter.new( 2 ).line_a( 1 ).should == "    "
-    LcdWriter.new( 3 ).line_a( 1 ).should == "     "
+    LcdWriter.new( 5 ).line_a( 1 ).should == "       "
   end
 
-  it 'should be able to write top line which is not all blank respecting size' do
+  it 'should be able to write top horizontal line which is not blank respecting size' do
     LcdWriter.new( 1 ).line_a( 8 ).should == " - "
     LcdWriter.new( 2 ).line_a( 8 ).should == " -- "
+  end
+
+  it 'should be able to write top vertical line which is not blank, respecting size' do
+    LcdWriter.new( 1 ).line_b( 8 ).should == "| |"
+    LcdWriter.new( 2 ).line_b( 8 ).should == "|  |"
   end
   
 end
