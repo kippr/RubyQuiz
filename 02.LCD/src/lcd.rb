@@ -5,7 +5,13 @@ class LcdWriter
   end
 
   def out numbers
-    line_a numbers
+    res = []
+    res << line_a( numbers )
+    @size.times{ res << line_b( numbers ) }
+    res << line_c( numbers )
+    @size.times{ res << line_d( numbers ) }
+    res << line_e( numbers )
+    res.join( "\n" ) + "\n"
   end
   
   def line_a numbers
