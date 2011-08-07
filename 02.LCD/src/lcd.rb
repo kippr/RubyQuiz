@@ -20,6 +20,13 @@ class LcdWriter
     c.pos( 1 ) + ( ' ' * @size ) + c.pos( 2 )
   end
 
+  def line_c numbers
+    numbers.to_s.chars.collect do | num |
+      c = LcdCode.new( num.to_i )
+      " " + ( c.pos( 3 ) * @size ) + " "
+    end.join( " " )
+  end
+
   def code_for number
     LcdCode.new( number )
   end
@@ -28,11 +35,12 @@ class LcdWriter
 end
 
   # Defines positions that are 'set' for each number, using 2**x where x corresponds to below:
-  #  -    0
-  # | |  1 2
-  #  -    3
-  # | |  4 5
-  #  -    6
+  #
+  #      -        0                line a
+  #     | |      1 2               line b
+  #      -        3                line c
+  #     | |      4 5               line d
+  #      -        6                line e
   #
   # Also, can return appropriate char ('|', '_', or ' ') for each code.
 class LcdCode
@@ -65,8 +73,14 @@ class LcdCode
       has_set 0, 1, 2, 4, 5, 6
     when 1
       has_set 2, 5
+    when 2
+      has_set 0, 2, 3, 4, 6
+    when 3
+      has_set 0, 2, 3, 5, 6
     when 4
       has_set 1, 2, 3, 5
+    when 5
+      has_set 0, 1, 3, 5, 6
     when 8
       has_set 0, 1, 2, 3, 4, 5, 6
     else
