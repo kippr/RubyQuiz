@@ -35,11 +35,15 @@ class LcdWriter
   end
   
   def vertical_for numbers, pos_a, pos_b
-    for_all( numbers ) { | n | n.draw( pos_a ) + ( ' ' * @size ) + n.draw( pos_b ) }
+    for_all( numbers ) do | n | 
+      n.draw( pos_a ) + ( ' ' * @size ) + n.draw( pos_b )
+     end
   end
 
   def horizontal_for numbers, pos_code
-    for_all( numbers ) { | n | " " + ( n.draw( pos_code ) * @size ) + " " }
+    for_all( numbers ) do | n | 
+      " " + ( n.draw( pos_code ) * @size ) + " "
+    end
   end
   
   def for_all numbers, &block
