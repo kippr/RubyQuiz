@@ -5,7 +5,7 @@ class LcdWriter
   end
 
   def out numbers
-    ""
+    line_1 numbers
   end
   
   def line_1 numbers
