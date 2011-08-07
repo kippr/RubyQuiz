@@ -23,7 +23,9 @@ describe LcdWriter do
   end
   
   it 'should be able to translate on values into simple number' do
-    LcdWriter.new( 1 ).line_1( 1 ).should == "    "
+    LcdWriter.new( 1 ).line_1( 1 ).should == "   "
+    LcdWriter.new( 2 ).line_1( 1 ).should == "    "
+    LcdWriter.new( 3 ).line_1( 1 ).should == "     "
   end
   
 end

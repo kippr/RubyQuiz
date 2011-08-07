@@ -1,11 +1,15 @@
 class LcdWriter
 
-  def initialize size
-    @size = size || 2
+  def initialize size = 2
+    @size = size
   end
 
   def out numbers
     ""
+  end
+  
+  def line_1 numbers
+    " " * ( @size + 2 )
   end
   
   # Gets the positions that are 'set' for each number, using 2**x where x corresponds to below
