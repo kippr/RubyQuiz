@@ -12,8 +12,8 @@ class LcdWriter
     horizontal_for numbers, 0
   end
   
-  def line_b numbers
-    for_all( numbers ) { | n | n.pos( 1 ) + ( ' ' * @size ) + n.pos( 2 ) }
+  def line_d numbers
+    vertical_for numbers, 1, 2
   end
 
   def line_c numbers
@@ -21,13 +21,16 @@ class LcdWriter
   end
   
   def line_d numbers
-    for_all( numbers ) { | n | n.pos( 4 ) + ( ' ' * @size ) + n.pos( 5 ) }
+    vertical_for numbers, 4, 5
   end
   
   def line_e numbers
     horizontal_for numbers, 6
   end
   
+  def vertical_for numbers, pos_a, pos_b
+    for_all( numbers ) { | n | n.pos( pos_a ) + ( ' ' * @size ) + n.pos( pos_b ) }
+  end
 
   def horizontal_for numbers, pos_code
     for_all( numbers ) { | n | " " + ( n.pos( pos_code ) * @size ) + " " }
