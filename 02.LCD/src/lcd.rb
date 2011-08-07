@@ -9,10 +9,7 @@ class LcdWriter
   end
   
   def line_a numbers
-    numbers.to_s.chars.collect do | num |
-      c = LcdCode.new( num.to_i )
-      " " + ( c.pos( 0 ) * @size ) + " "
-    end.join( " " )
+    horizontal_for numbers, 0
   end
   
   def line_b numbers
@@ -21,14 +18,18 @@ class LcdWriter
   end
 
   def line_c numbers
-    numbers.to_s.chars.collect do | num |
-      c = LcdCode.new( num.to_i )
-      " " + ( c.pos( 3 ) * @size ) + " "
-    end.join( " " )
+    horizontal_for numbers, 3
   end
-
+  
   def code_for number
     LcdCode.new( number )
+  end
+
+  def horizontal_for numbers, pos_code
+    numbers.to_s.chars.collect do | num |
+      c = LcdCode.new( num.to_i )
+      " " + ( c.pos( pos_code ) * @size ) + " "
+    end.join( " " )
   end
   
  
