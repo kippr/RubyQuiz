@@ -59,14 +59,10 @@ class GedComParser
   end
   
   def adjust_to depth
-      case
-        when depth < @depth
-          @doc.pop
-          @doc.pop
-        when depth == @depth
-          @doc.pop
+      while @depth > depth
+        @doc.pop
+        @depth =- 1
       end
-      @depth = depth
   end
   
 end
