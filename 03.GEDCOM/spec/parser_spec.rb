@@ -7,12 +7,12 @@ class GedComDoc
     @curr = @root
   end
 
-  
   def push_id tag, id
     push tag, { "id" => id }
   end
   
   def push_tag tag, data
+    p data
     push tag, {}, data
   end
   
@@ -28,6 +28,7 @@ class GedComDoc
     def push tag, attributes = {}, data = nil
       node = node( tag.downcase )
       attributes.each_pair{ |k,v| node[k] = v }
+      node.content = data unless data.nil?  
       @curr.add_child( node )
       @curr = node
     end
@@ -51,12 +52,12 @@ class GedComParser
   end
   
   def parse_line line
-      (depth, tag_or_id, values) = line.split
+      (depth, tag_or_id, *values) = line.split
       adjust_to depth.to_i
       if tag_or_id[0] == '@'
-        @doc.push_id values, tag_or_id[1..-2]
+        @doc.push_id values.first, tag_or_id[1..-2]
       else
-        @doc.push_tag tag_or_id, values
+        @doc.push_tag tag_or_id, values.join( " " )
       end 
   end
   
@@ -101,7 +102,7 @@ eos
   it "should add name under indi node" do
     name = @xml.xpath( '/gedcom/indi/name' ).first
     name.should_not be_nil
-    name.content.should == 'Jamis Gordon /Buck/'
+    name.inner_text.should include 'Jamis Gordon /Buck/'
   end
 
 end
