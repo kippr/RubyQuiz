@@ -10,7 +10,6 @@ class GedComDoc
   end
   
   def push_tag tag, data
-    p data
     push tag, {}, data
   end
   
@@ -44,12 +43,12 @@ class GedComParser
   end
   
   def parse input
-    input.each_line{ |l| parse_line l }
-    puts @doc.to_xml.to_s
+    input.each_line{ |l| parse_line l.strip }
     @doc
   end
   
   def parse_line line
+      return if line.empty?
       (depth, tag_or_id, *values) = line.split
       adjust_to depth.to_i
       if tag_or_id[0] == '@'
