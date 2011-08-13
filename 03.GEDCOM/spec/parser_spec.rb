@@ -24,17 +24,25 @@ end
 class GedComParser
   def initialize doc
     @doc = doc
+    @depth = -1
   end
   
   def parse input
-    depth = -1
-    input.each_line do | line |
-      line_depth = line[1].to_i
-      if line_depth == 0
-        @doc.push "indi"
-      end
-    end
+    input.each_line{ |l| parse_line l }
+    p @doc.to_xml.to_s
     @doc
+  end
+  
+  def parse_line line
+      line_bits = line.split
+      p line_bits
+      line_depth = line_bits[0].to_i
+      case
+        when line_depth > @depth
+          puts "hello mum"
+          @doc.push "indi"
+      end
+      @depth = line_depth
   end
   
 
