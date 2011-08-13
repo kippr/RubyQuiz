@@ -1,4 +1,4 @@
-require 'src/lcd.rb'
+require File.join(File.expand_path(File.dirname(__FILE__)), "..", "src", "lcd")
 
 describe LcdWriter do
   
