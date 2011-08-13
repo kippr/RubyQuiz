@@ -4,15 +4,20 @@ class GedComDoc
   def initialize
     @doc = Nokogiri::XML("")
     @root = @doc.add_child( node( "gedcom" ) )
+    @curr = @root
   end
 
-  def push element_name, attributes = {}
-    node = node( element_name )
-    attributes.each_pair{ |k,v| node[k] = v }
-    @root.add_child( node )
+  
+  def push_id tag, id
+    push tag, { "id" => id }
+  end
+  
+  def push_tag tag, data
+    push tag, {}, data
   end
   
   def pop
+    @curr = @curr.parent
   end
   
   def to_xml
@@ -20,6 +25,13 @@ class GedComDoc
   end
 
   private
+    def push tag, attributes = {}, data = nil
+      node = node( tag.downcase )
+      attributes.each_pair{ |k,v| node[k] = v }
+      @curr.add_child( node )
+      @curr = node
+    end
+    
     def node element_name
       Nokogiri::XML::Node.new( element_name, @doc )
     end
@@ -42,9 +54,9 @@ class GedComParser
       (depth, tag_or_id, values) = line.split
       adjust_to depth.to_i
       if tag_or_id[0] == '@'
-        parse_id_line tag_or_id[1..-2], values
+        @doc.push_id values, tag_or_id[1..-2]
       else
-        parse_data_line tag_or_id, values
+        @doc.push_tag tag_or_id, values
       end 
   end
   
@@ -59,14 +71,6 @@ class GedComParser
       @depth = depth
   end
   
-  def parse_id_line id, tag
-    @doc.push tag.downcase, { "id" => id }
-  end
-  
-  def parse_data_line tag, values
-    @doc.push tag
-  end
-
 end
 
 
@@ -92,6 +96,12 @@ eos
     first = @xml.xpath( '/gedcom/indi' ).first
     first.should_not be_nil
     first[:id].should == 'I1'
+  end
+  
+  it "should add name under indi node" do
+    name = @xml.xpath( '/gedcom/indi/name' ).first
+    name.should_not be_nil
+    name.content.should == 'Jamis Gordon /Buck/'
   end
 
 end
