@@ -23,11 +23,11 @@ class QuizMaster
         gloat_and_ask_to_play_again if reply == 'y'
         admit_defeat_and_ask_what_animal_it_was if reply == 'n'
       when :lost
-        ask_distinguishing_question if reply == 'a rabbit'
+        ask_distinguishing_question
       when :learning_new_question
-        ask_what_correct_answer_is_for_new_question if reply == 'Is it a small animal?'
+        ask_what_correct_answer_is_for_new_question
       when :learning_answer_to_new_question
-        remember_answer_and_ask_to_play_again if ['y', 'n'].include? reply
+        remember_answer_and_ask_to_play_again
       when :game_over
         prepare_game if reply == 'y'
     end
