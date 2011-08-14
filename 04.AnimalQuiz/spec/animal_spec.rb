@@ -30,6 +30,7 @@ class QuizMaster
     end
 
     def gloat_and_ask_to_play_again
+      @state = :game_over
       @questions << 'I win! Pretty smart! Play again? (y/n)'
     end
 
@@ -66,7 +67,8 @@ describe 'AnimalQuiz' do
     should_ask_is_it_an_elephant?
     answer 'y'
     question.should == 'I win! Pretty smart! Play again? (y/n)'
-    answer 'n'
+    answer 'y'
+    should_ask_is_it_an_elephant?
   end
 
   it 'should ask for help if it lost' do
