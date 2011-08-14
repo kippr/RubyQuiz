@@ -19,7 +19,6 @@ class QuizMaster
     case @state
       when :interrogating
         ask_clarifying_question
-        raise "Umm, oops"
       when :making_a_guess
         gloat_and_ask_to_play_again if reply == 'y'
         admit_defeat_and_ask_what_animal_it_was if reply == 'n'
@@ -39,6 +38,10 @@ class QuizMaster
     def prepare_game
       @questions = [] << "Think of an animal..."
       @state = :welcome
+    end
+
+    def ask_clarifying_question
+      @questions << 'Is it a small animal?'
     end
 
     def admit_defeat_and_ask_what_animal_it_was
@@ -114,10 +117,8 @@ describe 'AnimalQuiz' do
     run_to_getting_rabbit_definition
     question.should == 'Thanks! Play again? (y/n)'
     answer 'y'
-    should_ask_is_it_an_elephant?
-    answer 'n'
     should_ask_is_it_small?
-    answer 'n'
+    answer 'y'
     should_ask_is_it_a_rabbit?
     answer 'n'
     should_admit_defeat_and_ask_what_it_was
