@@ -1,10 +1,52 @@
+class QuizMaster
+  def initialize
+    @questions = [] << "Think of an animal..." << "Is it an elephant? (y/n)"
+    @state = :interrogate
+  end
+  
+  def next_question
+      @questions.shift
+  end
 
+  def answer reply
+    ask_distinguishing_question if reply == 'a rabbit'
+    ask_what_correct_answer_is_for_new_question if reply == 'Is it a small animal?'
+    if @state == :interrogate
+      gloat_and_ask_to_play_again if reply == 'y'
+      admit_defeat_and_ask_for_help if reply == 'n'
+    else
+      remember_answer_and_ask_to_play_again if ['y', 'n'].include? reply
+    end
+  end
+  
+  private
+    def gloat_and_ask_to_play_again
+      @questions << 'I win! Pretty smart! Play again? (y/n)'
+    end
+    
+    def admit_defeat_and_ask_for_help
+      @questions << 'You win, well done! Before you go, help me learn...' << 'What animal were you thinking of?'
+      @state = :learning
+    end
+    
+    def ask_distinguishing_question
+      @questions << 'Give me a question to distinguish an elephant from a rabbit.'
+    end
+    
+    def ask_what_correct_answer_is_for_new_question
+      @questions << 'For a rabbit, what is the answer to your question?'
+    end
+    
+    def remember_answer_and_ask_to_play_again
+      @questions << 'Thanks! Play again? (y/n)'
+    end
+
+end
 
 describe 'AnimalQuiz' do
 
   before :each do
-    @questions = [] << "Think of an animal..." << "Is it an elephant? (y/n)"
-    @state = :interrogate
+    @master = QuizMaster.new
   end
 
   it 'should start simple, with an animal question' do
@@ -52,18 +94,11 @@ describe 'AnimalQuiz' do
   end
 
   def question
-    @questions.shift
+    @master.next_question
   end
   
   def answer reply
-    ask_distinguishing_question if reply == 'a rabbit'
-    ask_what_correct_answer_is_for_new_question if reply == 'Is it a small animal?'
-    if @state == :interrogate
-      gloat_and_ask_to_play_again if reply == 'y'
-      admit_defeat_and_ask_for_help if reply == 'n'
-    else
-      remember_answer_and_ask_to_play_again if ['y', 'n'].include? reply
-    end
+    @master.answer reply
   end
   
   def should_ask_is_it_an_elephant?
@@ -82,27 +117,6 @@ describe 'AnimalQuiz' do
 
   def should_ask_is_it_small?
     question.should == 'Is it a small animal?'
-  end
-
-  def gloat_and_ask_to_play_again
-    @questions << 'I win! Pretty smart! Play again? (y/n)'
-  end
-  
-  def admit_defeat_and_ask_for_help
-    @questions << 'You win, well done! Before you go, help me learn...' << 'What animal were you thinking of?'
-    @state = :learning
-  end
-  
-  def ask_distinguishing_question
-    @questions << 'Give me a question to distinguish an elephant from a rabbit.'
-  end
-  
-  def ask_what_correct_answer_is_for_new_question
-    @questions << 'For a rabbit, what is the answer to your question?'
-  end
-  
-  def remember_answer_and_ask_to_play_again
-    @questions << 'Thanks! Play again? (y/n)'
   end
   
 end
