@@ -33,6 +33,22 @@ describe 'AnimalQuiz' do
     question.should == 'Thanks! Play again? (y/n)'
   end
 
+  it 'should try again after learning about rabbits' do
+    should_ask_is_it_an_elephant
+    answer 'n'
+    should_ask_is_it_small
+    answer 'n'
+    should_ask_is_it_a_rabbit
+    answer 'n'
+    should_admit_defeat_and_ask_what_it_was
+    answer 'a Shih Tzu'
+    question.should == 'Give me a question to distinguish a rabbit from a Shih Tzu.'
+    answer 'Is it a dog?'
+    question.should == 'For a Shih Tzu, what is the answer to your question?'
+    answer 'y'
+    question.should == 'Thanks! Play again? (y/n)'
+  end
+
   def question
     @questions.shift
   end
