@@ -21,6 +21,7 @@ describe 'AnimalQuiz' do
   end
 
   it 'should ask what animal you were thinking of and a question for it' do
+    pending
     ask_is_it_an_elephant?
     answer 'n'
     ask_what_animal_it_was
@@ -38,13 +39,17 @@ describe 'AnimalQuiz' do
   end
   
   def answer reply
-    @questions << 'I win! Pretty smart! Play again? (y/n)' if reply == 'y'
+    gloat_and_ask_to_play_again if reply == 'y'
     @questions << 'You win, well done! Before you go, help me learn...' << 'What animal were you thinking of?' if reply == 'n'
   end
   
   def ask_is_it_an_elephant?
     question.should == 'Think of an animal...'
     question.should == 'Is it an elephant? (y/n)'
+  end
+  
+  def gloat_and_ask_to_play_again
+    @questions << 'I win! Pretty smart! Play again? (y/n)'
   end
   
   def ask_what_animal_it_was
