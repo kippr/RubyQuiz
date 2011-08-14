@@ -17,7 +17,7 @@ describe 'AnimalQuiz' do
   it 'should ask for a clue if it didnt win' do
     ask_is_it_an_elephant?
     answer 'n'
-    ask_what_animal_it_was
+    admit_defeat_and_ask_for_help
   end
 
   it 'should ask what animal you were thinking of and a question for it' do
@@ -54,14 +54,6 @@ describe 'AnimalQuiz' do
   
   def admit_defeat_and_ask_for_help
     @questions << 'You win, well done! Before you go, help me learn...' << 'What animal were you thinking of?'
-  end
-  
-  def ask_what_animal_it_was
-    question.should == 'You win, well done! Before you go, help me learn...'
-    question.should == 'What animal were you thinking of?'
-  end
-
-  def ask_for_a_distinguishing_question_for the_animal
   end
   
 end
