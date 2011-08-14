@@ -2,10 +2,17 @@ class QuizMaster
 
   def initialize
     prepare_game
+    @animal_questions = [] << "Is it an elephant? (y/n)"
   end
   
   def next_question
-      @questions.shift
+      question = @questions.shift
+      if @state == :welcome
+        @state = :interrogate
+        @questions = Array.new( @animal_questions )
+      end
+      question
+      
   end
 
   def answer reply
@@ -25,8 +32,8 @@ class QuizMaster
   private
 
     def prepare_game
-      @questions = [] << "Think of an animal..." << "Is it an elephant? (y/n)"
-      @state = :interrogate
+      @questions = [] << "Think of an animal..."
+      @state = :welcome
     end
 
     def gloat_and_ask_to_play_again
