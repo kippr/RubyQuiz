@@ -1,3 +1,5 @@
+
+
 describe 'AnimalQuiz' do
 
   before :each do
@@ -26,7 +28,7 @@ describe 'AnimalQuiz' do
     answer 'n'
     should_admit_defeat_and_ask_what_it_was
     answer 'a rabbit'
-    question.should == 'Give me a question to distinguish an elephant from a rabbit.'
+    should_ask_for_distinguishing_question_between 'an elephant', 'a rabbit'
     answer 'Is it a small animal?'
     question.should == 'For a rabbit, what is the answer to your question?'
     answer 'y'
@@ -34,15 +36,15 @@ describe 'AnimalQuiz' do
   end
 
   it 'should try again after learning about rabbits' do
-    should_ask_is_it_an_elephant
+    should_ask_is_it_an_elephant?
     answer 'n'
-    should_ask_is_it_small
+    should_ask_is_it_small?
     answer 'n'
     should_ask_is_it_a_rabbit
     answer 'n'
     should_admit_defeat_and_ask_what_it_was
     answer 'a Shih Tzu'
-    question.should == 'Give me a question to distinguish a rabbit from a Shih Tzu.'
+    should_ask_for_distinguishing_question_between 'a rabbit', 'a Shih Tzu'
     answer 'Is it a dog?'
     question.should == 'For a Shih Tzu, what is the answer to your question?'
     answer 'y'
@@ -73,7 +75,15 @@ describe 'AnimalQuiz' do
     question.should == 'You win, well done! Before you go, help me learn...'
     question.should == 'What animal were you thinking of?'
   end
-  
+
+  def should_ask_for_distinguishing_question_between known_animal, new_animal
+    question.should == 'Give me a question to distinguish an elephant from a rabbit.'
+  end
+
+  def should_ask_is_it_small?
+    question.should == 'Is it a small animal?'
+  end
+
   def gloat_and_ask_to_play_again
     @questions << 'I win! Pretty smart! Play again? (y/n)'
   end
