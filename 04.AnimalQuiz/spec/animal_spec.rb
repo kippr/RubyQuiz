@@ -23,7 +23,7 @@ class QuizMaster
         gloat_and_ask_to_play_again if reply == 'y'
         admit_defeat_and_ask_what_animal_it_was if reply == 'n'
       when :lost
-        ask_distinguishing_question
+        ask_for_new_distinguishing_question
       when :learning_new_question
         ask_what_correct_answer_is_for_new_question
       when :learning_answer_to_new_question
@@ -41,7 +41,7 @@ class QuizMaster
     end
 
     def ask_clarifying_question
-      @questions << 'Is it a small animal?'
+      @state = :making_a_guess
     end
 
     def admit_defeat_and_ask_what_animal_it_was
@@ -49,14 +49,14 @@ class QuizMaster
       @questions << 'You win, well done! Before you go, help me learn...' << 'What animal were you thinking of?'
     end
 
-    def ask_distinguishing_question
+    def ask_for_new_distinguishing_question
       @state = :learning_new_question
       @questions << 'Give me a question to distinguish an elephant from a rabbit.'
     end
 
     def ask_what_correct_answer_is_for_new_question
       @state = :learning_answer_to_new_question
-      @animal_questions << 'Is it a small animal?'
+      @animal_questions = [ 'Is it a small animal?', 'Is it a rabbit? (y/n)' ]
       @questions << 'For a rabbit, what is the answer to your question?'
     end
 
@@ -79,24 +79,29 @@ describe 'AnimalQuiz' do
   end
 
   it 'should start simple, with an animal question' do
+    should_be_welcomed
     should_ask_is_it_an_elephant?
   end
   
   it 'should be happy if it got lucky' do
+    should_be_welcomed
     should_ask_is_it_an_elephant?
     answer 'y'
     question.should == 'I win! Pretty smart! Play again? (y/n)'
     answer 'y'
+    should_be_welcomed
     should_ask_is_it_an_elephant?
   end
 
   it 'should ask for help if it lost' do
+    should_be_welcomed
     should_ask_is_it_an_elephant?
     answer 'n'
     should_admit_defeat_and_ask_what_it_was
   end
 
   def run_to_getting_rabbit_definition
+    should_be_welcomed
     should_ask_is_it_an_elephant?
     answer 'n'
     should_admit_defeat_and_ask_what_it_was
@@ -117,6 +122,7 @@ describe 'AnimalQuiz' do
     run_to_getting_rabbit_definition
     question.should == 'Thanks! Play again? (y/n)'
     answer 'y'
+    should_be_welcomed
     should_ask_is_it_small?
     answer 'y'
     should_ask_is_it_a_rabbit?
@@ -137,9 +143,12 @@ describe 'AnimalQuiz' do
   def answer reply
     @master.answer reply
   end
-  
-  def should_ask_is_it_an_elephant?
+
+  def should_be_welcomed
     question.should == 'Think of an animal...'
+  end
+
+  def should_ask_is_it_an_elephant?
     question.should == 'Is it an elephant? (y/n)'
   end
 
