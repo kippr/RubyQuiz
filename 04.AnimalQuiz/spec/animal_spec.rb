@@ -18,6 +18,7 @@ class QuizMaster
   def answer reply
     case @state
       when :interrogating
+        ask_clarifying_question
         raise "Umm, oops"
       when :making_a_guess
         gloat_and_ask_to_play_again if reply == 'y'
@@ -40,11 +41,6 @@ class QuizMaster
       @state = :welcome
     end
 
-    def gloat_and_ask_to_play_again
-      @state = :game_over
-      @questions << 'I win! Pretty smart! Play again? (y/n)'
-    end
-
     def admit_defeat_and_ask_what_animal_it_was
       @state = :lost
       @questions << 'You win, well done! Before you go, help me learn...' << 'What animal were you thinking of?'
@@ -61,10 +57,16 @@ class QuizMaster
       @questions << 'For a rabbit, what is the answer to your question?'
     end
 
+    def gloat_and_ask_to_play_again
+      @state = :game_over
+      @questions << 'I win! Pretty smart! Play again? (y/n)'
+    end
+
     def remember_answer_and_ask_to_play_again
       @state = :game_over
       @questions << 'Thanks! Play again? (y/n)'
     end
+
 end
 
 describe 'AnimalQuiz' do
