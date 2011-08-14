@@ -40,7 +40,7 @@ describe 'AnimalQuiz' do
   
   def answer reply
     gloat_and_ask_to_play_again if reply == 'y'
-    @questions << 'You win, well done! Before you go, help me learn...' << 'What animal were you thinking of?' if reply == 'n'
+    admit_defeat_and_ask_for_help if reply == 'n'
   end
   
   def ask_is_it_an_elephant?
@@ -50,6 +50,10 @@ describe 'AnimalQuiz' do
   
   def gloat_and_ask_to_play_again
     @questions << 'I win! Pretty smart! Play again? (y/n)'
+  end
+  
+  def admit_defeat_and_ask_for_help
+    @questions << 'You win, well done! Before you go, help me learn...' << 'What animal were you thinking of?'
   end
   
   def ask_what_animal_it_was
