@@ -5,26 +5,26 @@ describe 'AnimalQuiz' do
   end
 
   it 'should start simple, with an animal question' do
-    ask_is_it_an_elephant?
+    should_ask_is_it_an_elephant?
   end
   
   it 'should be happy if it got lucky' do
-    ask_is_it_an_elephant?
+    should_ask_is_it_an_elephant?
     answer 'y'
     question.should == 'I win! Pretty smart! Play again? (y/n)'
   end
 
   it 'should ask for help if it lost' do
-    ask_is_it_an_elephant?
+    should_ask_is_it_an_elephant?
     answer 'n'
-    admit_defeat_and_ask_for_help
+    should_admit_defeat_and_ask_for_help
   end
 
-  it 'should prompt for the animaL, distinguishing question and the answer' do
+  it 'should prompt for the animal, distinguishing question and the answer' do
     pending
-    ask_is_it_an_elephant?
+    should_ask_is_it_an_elephant?
     answer 'n'
-    ask_what_animal_it_was
+    admit_defeat_and_ask_for_help
     answer 'a rabbit'
     question.should == 'Give me a question to distinguish an elephant from a rabbit.'
     answer 'Is it a small animal?'
@@ -43,9 +43,14 @@ describe 'AnimalQuiz' do
     admit_defeat_and_ask_for_help if reply == 'n'
   end
   
-  def ask_is_it_an_elephant?
+  def should_ask_is_it_an_elephant?
     question.should == 'Think of an animal...'
     question.should == 'Is it an elephant? (y/n)'
+  end
+  
+  def should_admit_defeat_and_ask_for_help
+    question.should == 'You win, well done! Before you go, help me learn...'
+    question.should == 'What animal were you thinking of?'
   end
   
   def gloat_and_ask_to_play_again
