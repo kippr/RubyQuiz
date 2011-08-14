@@ -4,23 +4,23 @@ describe 'AnimalQuiz' do
     @questions = [] << "Think of an animal..." << "Is it an elephant? (y/n)"
   end
 
-  it 'should start simple' do
+  it 'should start simple, with an animal question' do
     ask_is_it_an_elephant?
   end
   
-  it 'should be happy if you get lucky' do
+  it 'should be happy if it got lucky' do
     ask_is_it_an_elephant?
     answer 'y'
     question.should == 'I win! Pretty smart! Play again? (y/n)'
   end
 
-  it 'should ask for a clue if it didnt win' do
+  it 'should ask for help if it lost' do
     ask_is_it_an_elephant?
     answer 'n'
     admit_defeat_and_ask_for_help
   end
 
-  it 'should ask what animal you were thinking of and a question for it' do
+  it 'should prompt for the animaL, distinguishing question and the answer' do
     pending
     ask_is_it_an_elephant?
     answer 'n'
